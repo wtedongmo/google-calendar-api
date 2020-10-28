@@ -28,7 +28,6 @@ import java.util.TimeZone;
 
 public class CalendarQuickstart {
     private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
-//    private static final String APPLICATION_NAME = "blaxand-anglo";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
@@ -39,7 +38,6 @@ public class CalendarQuickstart {
 //    private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
-//    private static final String CREDENTIALS_FILE_PATH = "/blaxand-anglo-7101de473f73.json";
 
     /**
      * Creates an authorized Credential object.
@@ -96,10 +94,10 @@ public class CalendarQuickstart {
             }
         }
 
-//        Event eventUpd  = updateEvent(service, eventCreated.getId());
+        Event eventUpd  = updateEvent(service, eventCreated.getId());
 //        Event eventUpd  = updateEvent(service, items.get(items.size()-1).getId());
-//        System.out.printf("\nEvent updated Id: %s \tSummary %s \tStart Time:(%s)\n", eventUpd.getId(), eventUpd.getSummary(),
-//                eventUpd.getStart().getDateTime());
+        System.out.printf("\nEvent updated Id: %s \tSummary %s \tStart Time:(%s)\n", eventUpd.getId(), eventUpd.getSummary(),
+                eventUpd.getStart().getDateTime());
     }
 
     private static Event createEvent(Calendar service){
@@ -109,7 +107,7 @@ public class CalendarQuickstart {
 // credentials.
 
         Event event = new Event()
-                .setSummary("BLAXAND Project 2020, Test Create event with Google meet link")
+                .setSummary("Test Create event with Google meet link")
                 .setLocation("Mauritius - Ebene")
 //                .setConferenceData(new ConferenceData().setCreateRequest(new CreateConferenceRequest()))
                 .setDescription("Second meeting and A chance to hear more about Google's developer products.");
@@ -127,23 +125,19 @@ public class CalendarQuickstart {
 //                .setTimeZone("America/Los_Angeles");
         event.setStart(start);
 
-//        DateTime endDateTime = new DateTime("2020-10-28T17:00:00-07:00");
         System.out.println("\nTime zone default: "+timeZone.getID());
         DateTime endDateTime = new DateTime("2020-10-29T13:00:00"+addZoneTime);
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
                 .setTimeZone(timeZone.getID());
-//                .setTimeZone("America/Los_Angeles");
         event.setEnd(end);
 
 //        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
 //        event.setRecurrence(Arrays.asList(recurrence));
 
         EventAttendee[] attendees = new EventAttendee[] {
-//                new EventAttendee().setEmail("wtedongmo@gmail.com"),
-                new EventAttendee().setEmail("jessen.valaythen@nanobnk.com"),
-                new EventAttendee().setEmail("asha.kokil@nanobnk.com"),
-                new EventAttendee().setEmail("madeven.pyanee@nanobnk.com"),
+                new EventAttendee().setEmail("attendee-email1@mail.com"),
+                new EventAttendee().setEmail("attendee-email1@mail.com"),
         };
         event.setAttendees(Arrays.asList(attendees));
 
@@ -173,9 +167,8 @@ public class CalendarQuickstart {
         try {
             String calendarId = "primary";
 
-//            String calendarId = "wilfried.tedongmo@nanobnk.com";
             event = service.events().insert(calendarId, event)
-                    .setKey("AIzaSyDkLojF6dbbRP9uQG_rKaxVv3ifmLPI728")
+                    .setKey("Your-Google-API-Key")
                     .setSendNotifications(true)
                     .setConferenceDataVersion(1)
                     .execute();
@@ -198,15 +191,14 @@ public class CalendarQuickstart {
             System.out.println("\nEvent retrieved: "+event.getId());
 
     // Make a change
-            event.setSummary("BLAXAND Project 2020, Test update event2");
+            event.setSummary("Test update event2");
             List atts = event.getAttendees();
-//            atts.add(new EventAttendee().setEmail("wtedongmo@gmail.com"));
-            atts.add(new EventAttendee().setEmail("jessen.valaythen@nanobnk.com"));
+            atts.add(new EventAttendee().setEmail("attendee-added-email@mail.com"));
             event.setAttendees(atts);
 
     // Update the event
             event = service.events().update("primary", event.getId(), event)
-                    .setKey("AIzaSyDkLojF6dbbRP9uQG_rKaxVv3ifmLPI728")
+                    .setKey("Your-Google-API-Key")
                     .setSendNotifications(true)
                     .execute();
 
